@@ -23,9 +23,7 @@ public class Main {
 
         System.out.println("\nComparison:");
         System.out.println("Same flight capacity? ");
-        if(flight1.getCapacity() == flight2.getCapacity()){
-            System.out.println("Flight capacity equal");
-        }
+
 
         System.out.println("Same destination? " +
                 flight1.getDestination().equals(flight2.getDestination()));
