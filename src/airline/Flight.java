@@ -1,5 +1,7 @@
 package airline;
 
+import java.util.Objects;
+
 public class Flight {
     private String flightNumber;
     private String origin;
@@ -17,38 +19,38 @@ public class Flight {
         return flightNumber;
     }
 
-    public void setFlightNumber(String flightNumber) {
-        this.flightNumber = flightNumber;
-    }
-
     public String getOrigin() {
         return origin;
-    }
-
-    public void setOrigin(String origin) {
-        this.origin = origin;
     }
 
     public String getDestination() {
         return destination;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
     public int getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "number='" + flightNumber + '\'' +
+                ", from='" + origin + '\'' +
+                ", to='" + destination + '\'' +
+                ", capacity=" + capacity +
+                '}';
     }
 
-    public void displayInfo() {
-        System.out.println("Flight " + flightNumber +
-                " from " + origin +
-                " to " + destination +
-                ", capacity: " + capacity);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Flight)) return false;
+        Flight flight = (Flight) o;
+        return flightNumber.equals(flight.flightNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(flightNumber);
     }
 }

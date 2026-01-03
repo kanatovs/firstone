@@ -1,31 +1,47 @@
 package airline;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 public class Main {
     public static void main(String[] args) {
 
-        Flight flight1 = new Flight("KC123", "Almaty", "Astana", 180);
-        Flight flight2 = new Flight("KC124", "Almaty", "Astana", 180);
-        Flight flight3 = new Flight("KC125", "Almaty", "Astana", 180);
+        // Data pool
+        ArrayList<Flight> flights = new ArrayList<>();
 
-        Passenger passenger1 = new Passenger("Aruzhan", "KZ123456", 19);
-        Passenger passenger2 = new Passenger("Dias", "KZ654321", 21);
-        Passenger passenger3 = new Passenger("Alimzhan", "KZ65423321", 268);
+        flights.add(new Flight("KC123", "Almaty", "Astana", 180));
+        flights.add(new Flight("KC124", "Astana", "Aktau", 150));
+        flights.add(new Flight("KC125", "Almaty", "Aktau", 200));
 
-        Booking booking1 = new Booking(flight1, passenger1, "12A");
-        Booking booking2 = new Booking(flight1, passenger2, "12B");
-        Booking booking3 = new Booking(flight3, passenger3, "12C");
+        // Sorting
+        flights.sort(Comparator.comparingInt(Flight::getCapacity));
 
-        booking1.displayBooking();
-        System.out.println();
-        booking2.displayBooking();
-        System.out.println();
-        booking3.displayBooking();
+        System.out.println("Sorted flights:");
+        for (Flight f : flights) {
+            System.out.println(f);
+        }
 
-        System.out.println("\nComparison:");
-        System.out.println("Same flight capacity? ");
+        System.out.println("\nFiltered flights (capacity > 160):");
+        for (Flight f : flights) {
+            if (f.getCapacity() > 160) {
+                System.out.println(f);
+            }
+        }
 
+        // Passengers (polymorphism)
+        Passenger p1 = new AdultPassenger("Aruzhan", "KZ123");
+        Passenger p2 = new ChildPassenger("Ali", "KZ456");
 
-        System.out.println("Same destination? " +
-                flight1.getDestination().equals(flight2.getDestination()));
+        // Booking
+        Booking b1 = new Booking(flights.get(0), p1, "12A");
+        Booking b2 = new Booking(flights.get(1), p2, "12B");
+
+        b1.printBooking();
+        b2.printBooking();
+
+        // equals demonstration
+        Flight testFlight = new Flight("KC123", "X", "Y", 0);
+        System.out.println("flight equals testFlight: " + flights.get(0).equals(testFlight));
     }
 }
